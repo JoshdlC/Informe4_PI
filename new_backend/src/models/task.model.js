@@ -1,7 +1,7 @@
-import mongoose, { Cursor } from "mongoose";
+import mongoose from "mongoose";
 
-new mongoose.Schema({
-    ususario: {
+const taskSchema = new mongoose.Schema({
+    usuario: {
         type: String,
         required: true,
     },
@@ -16,5 +16,9 @@ new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now,
-    }
-})
+    },
+}, {
+    timestamps: true
+});
+
+export default mongoose.model('Task', taskSchema);
