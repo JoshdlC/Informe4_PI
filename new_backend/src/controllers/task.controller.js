@@ -8,7 +8,7 @@ export const getTasks = async (req, res) => {
 export const createTask = async (req, res) => {
     const { usuario, curso, mensaje, date } = req.body;
     const newTask = new Task({
-        usuario,
+        usuario: req.user.id,
         curso,
         mensaje,
         date
@@ -34,5 +34,5 @@ export const updateTask = async (req, res) => {
 export const deleteTask = async (req, res) => {
     const task = await Task.findByIdAndDelete(req.params.id);
     if(!task) return res.status(404).json({message: 'Task not found'});
-    res.json(task);
+    return res.json(204);
 };
