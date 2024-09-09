@@ -15,7 +15,12 @@ function HomePage() {
                 alt = "Logo de la Facultad de Ingenieria USAC"
                 className="w-1/3 h-1/3"
             >
-            
+            </img>
+            <img
+              src="./resources/logo_SISTEMAS.png"
+              alt = "Logo de la Escuela de Ciencias y Sistemas de FIUSAC"
+              className="w-1/3 h-1/3"
+            >
             </img>
           <br></br>
         </div>
