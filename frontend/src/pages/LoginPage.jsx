@@ -53,7 +53,7 @@ function LoginPage() {
                         placeholder="Registro academico"
                         />
                         {
-                            errors.registro && (
+                            errors.registro_academico && (
                             <p className="text-red-500">Registro academico es requerido</p>
                         )}
 

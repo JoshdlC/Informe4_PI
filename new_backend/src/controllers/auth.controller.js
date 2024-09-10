@@ -46,7 +46,7 @@ export const login = async(req, res) => {
     try {
 
         const userFound = await User.findOne({registro_academico})
-        if (!userFound) return res.status(400).json({message: "User not found"});
+        if (!userFound) return res.status(400).json({message: "Registro academico no registrado"});
 
         const  isMatch = await bcrypt.compare(password, userFound.password)
         if(!isMatch) return res.status(400).json({message: "Incorrect password"});
