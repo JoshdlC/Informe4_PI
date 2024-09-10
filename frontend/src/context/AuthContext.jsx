@@ -75,7 +75,7 @@ export const AuthProvider = ({children}) => {
             setIsAuthenticated(true);
         } catch (error) {
             console.log(error.response);
-            setErrors(error.response.data.errors);
+            setErrors(error.response.data);
         }
     };
 
@@ -107,7 +107,7 @@ export const AuthProvider = ({children}) => {
             loading,
             user, 
             isAuthenticated, 
-            errors
+            errors,
         }}>
             {children}
         </AuthContext.Provider>

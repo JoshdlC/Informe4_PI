@@ -6,7 +6,8 @@ import { useNavigate, Link } from "react-router-dom"
 
 function RegisterPage() {
     const { register , handleSubmit, formState: {errors} } = useForm();
-    const {signUp, isAuthenticated, errors:registerErrors} = useAuth();
+    const { signUp, isAuthenticated, errors: registerErrors } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isAuthenticated) navigate('/foro')
@@ -15,11 +16,6 @@ function RegisterPage() {
     const onSubmit = handleSubmit(async (values) => {
         signUp(values)
     })
-
-
-    const navigate = useNavigate();
-    
-
 
     return (
         <main>
@@ -35,8 +31,8 @@ function RegisterPage() {
             <div className="flex h-[calc(100vh-50px)] items-center justify-center  ">
                 <div className='bg-zinc-800 max-w-md p-10 rounded-md'>
                 {
-                    Array.isArray(registerErrors) && registerErrors.length > 0 && registerErrors.map((error, index) => (
-                    <div className="bg-red-500 p-2 text-white" key={index}>
+                    registerErrors.map((error, i) => (
+                    <div className="bg-red-500 p-2 text-white">
                         {error}
                     </div>
                     ))
