@@ -5,19 +5,20 @@ import { useEffect } from "react"
 import { useNavigate, Link } from "react-router-dom"
 
 function RegisterPage() {
-    const { register , handleSubmit, formState: errors } = useForm();
-
-    const onSubmit = handleSubmit(async (values) => {
-        const res = await registerRequest(values)
-        console.log(res);
-    })
-
+    const { register , handleSubmit, formState: {errors} } = useForm();
     const {signUp, isAuthenticated, errors:registerErrors} = useAuth();
-    const navigate = useNavigate();
-    
+
     useEffect(() => {
         if (isAuthenticated) navigate('/foro')
-      }, [isAuthenticated]);
+    }, [isAuthenticated]);
+
+    const onSubmit = handleSubmit(async (values) => {
+        signUp(values)
+    })
+
+
+    const navigate = useNavigate();
+    
 
 
     return (
@@ -49,7 +50,7 @@ function RegisterPage() {
                         placeholder='Registro Academico'
                     />
                     {
-                        errors.registro && (
+                        errors.registro_academico && (
                         <p className="text-red-500">Registro academico es requerido</p>
                     )}
                     <input type='text' {...register('nombres', {required: true})}
@@ -82,7 +83,7 @@ function RegisterPage() {
                         placeholder='Correo'
                     />
                     {
-                        errors.email && (
+                        errors.correo && (
                         <p className="text-red-500">El correo es requerido</p>
                     )}
                     <button type='submit' className='bg-violet-600 hover:bg-violet-700 active:bg-violet-800 focus:ring
