@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTasks } from "../context/TaskContext";
 import { useEffect } from "react";
+import TaskCard from '../components/TaskCard';
 
 
 function MainUsersPage() {
@@ -32,19 +33,10 @@ function MainUsersPage() {
                 </div>
 
             </header>
-            <div className="text-bold font-bold text-xl">
-                <h1>
-                    Hola
-                </h1>
+            <div className="text-bold font-bold text-xl my-10">
+                
                 <div>
-                {
-                    tasks.map(task => (
-                    <div key={task._id}>
-                        <h2>{task.titulo}</h2>
-                        <p>{task.descripcion}</p>
-                    </div>
-                ))  
-                }
+                <Link to={'/tasks'} className='bg-violet-500 px-4 py-1 rounded-md font-bold my-10'>Mis publicaciones</Link>
                 </div>
             </div>
         </main>
