@@ -18,6 +18,8 @@ function NewPubPage() {
           <h1 className='flex items-center justify-center text-2xl font-bold my-6'> Nueva publicacion</h1>
           <form onSubmit={onSubmit}>
 
+            //! Falta el apartado de curso 
+            
             <input type="text" placeholder="Titulo" 
               {...register("curso", {required: true})}
               className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'

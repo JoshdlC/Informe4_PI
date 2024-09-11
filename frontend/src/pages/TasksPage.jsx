@@ -20,8 +20,8 @@ function TasksPage() {
     {
         tasks.map(task => (
             <div key={task._id}>
-                <h2>{task.titulo}</h2>
-                <p>{task.descripcion}</p>
+                <h2>{task.curso}</h2>
+                <p>{task.mensaje}</p>
             </div>
         ))  
     }
