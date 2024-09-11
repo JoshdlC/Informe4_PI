@@ -1,6 +1,8 @@
 import User from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 import {createAccessToken} from '../libs/jwt.js'
+import jwt from 'jsonwebtoken'
+import { TOKEN_SECRET } from '../config.js';
 
 export const register = async(req, res) => {
     const { registro_academico, nombres, apellidos, password, correo } = req.body;
@@ -8,7 +10,10 @@ export const register = async(req, res) => {
     try {
 
         const userFound = await User.findOne({registro_academico})
-        if (userFound) return res.status(400).json({message: ["El registro academico ya existe"],});
+        if (userFound) return res.status(400).json(["El registro academico ya existe"]);
+
+        const userFoundEmail = await User.findOne({correo})
+        if (userFoundEmail) return res.status(400).json(["El correo ya existe"]);
 
         const  passwordHash = await bcrypt.hash(password, 10)
 
@@ -41,7 +46,7 @@ export const login = async(req, res) => {
     try {
 
         const userFound = await User.findOne({registro_academico})
-        if (!userFound) return res.status(400).json({message: "User not found"});
+        if (!userFound) return res.status(400).json({message: "Registro academico no registrado"});
 
         const  isMatch = await bcrypt.compare(password, userFound.password)
         if(!isMatch) return res.status(400).json({message: "Incorrect password"});
@@ -81,4 +86,24 @@ export const profile = async (req, res) => {
         correo: userFound.correo,
     })
     res.send('profile')
+};
+
+export const verifyToken = async (req, res) => {
+    const {token} = req.cookies;
+
+    if(!token) return res.status(401).json({message: "Acceso no autorizado"});
+
+    jwt.verify(token, TOKEN_SECRET, async  (err, user) => {
+        if(err) return res.status(401).json({message: "Acceso no autorizado"});
+        
+        const userFound = await User.findById(user.id)
+        if (!userFound) return res.status(400).json({message: "User not found"});
+        
+        return res.json({
+            id: userFound._id,
+            username: userFound.username,
+            email: userFound.email
+        });
+    });
+
 };
