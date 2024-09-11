@@ -2,7 +2,7 @@ import axios from './axios';
 
 export const getTasksRequest = () => axios.get('/tasks');
 
-export const getTaskRequest = async (id) => axios.get(`/tasks/${id}`);
+export const getTaskRequest = (_id) => axios.get(`/tasks/${_id}`);
 
 export const createTaskRequest = (task) => axios.post("/tasks", task);
 
