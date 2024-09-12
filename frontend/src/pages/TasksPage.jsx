@@ -20,7 +20,14 @@ function TasksPage() {
     <div className='grid grid-cols-3 gap-2'>
     {
         tasks.map(task => (
+<<<<<<< HEAD
             <TaskCard task={task} key={task._id}/>
+=======
+            <div key={task._id}>
+                <h2>{task.curso}</h2>
+                <p>{task.mensaje}</p>
+            </div>
+>>>>>>> origin/main
         ))  
     }
     </div>
