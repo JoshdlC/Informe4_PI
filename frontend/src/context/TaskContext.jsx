@@ -62,6 +62,10 @@ export function TaskProvider({children}){
         }
         
     }
+
+    const filtrarTasks = (curso) => {
+        
+    }
     return (
         <TaskContext.Provider 
         value={{

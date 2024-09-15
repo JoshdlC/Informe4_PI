@@ -4,12 +4,14 @@ import { useAuth } from '../context/AuthContext'
 function NavBar() {
 
   const {isAuthenticated, logout, user} = useAuth();
-  console.log(user)
+  // console.log(user)
 
 
   return (
     <nav className="bg-zinc-700 my-3 flex justify-between py-4 px-10 rounded-lg">
-      <Link to='/'>
+      <Link to={
+        isAuthenticated ? '/foro' : '/'
+      }>
         <h1 className="text-2xl font-bold">Página principal</h1>
       </Link>
         

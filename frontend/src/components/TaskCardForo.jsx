@@ -2,7 +2,7 @@ import React from 'react'
 import { useTasks } from '../context/TaskContext'
 import { Link } from 'react-router-dom';
 
-function TaskCard({task}) {
+function TaskCardForo({task}) {
 
 
     const {deleteTask} = useTasks();
@@ -14,8 +14,8 @@ function TaskCard({task}) {
             <div className='flex gap-2 items-center'>
                 <button onClick={() =>
                     deleteTask(task._id)
-                }>Borrar</button>
-                <Link to={`/tasks/${task._id}`}>Editar</Link>
+                }>Comentar !! CAMBIAR ESTO</button>
+                
             </div>
         </header>
         <p className='text-slate-300'>{task.mensaje}</p>
@@ -24,4 +24,4 @@ function TaskCard({task}) {
   )
 }
 
-export default TaskCard
+export default TaskCardForo

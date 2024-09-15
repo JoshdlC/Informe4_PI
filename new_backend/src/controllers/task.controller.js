@@ -1,6 +1,7 @@
 import Task from '../models/task.model.js';
 
 export const getTasks = async (req, res) => {
+    
     try {
         const tasks = await Task.find();
         res.json(tasks);
