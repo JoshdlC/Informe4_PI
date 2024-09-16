@@ -9,6 +9,7 @@ import NewPubPage from "./pages/NewPubPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 import { TaskProvider } from "./context/TaskContext";
+import { CursoProvider } from "./context/CursoContext";
 import TasksPage from "./pages/TasksPage";
 import NavBar from "./components/NavBar";
 
@@ -17,25 +18,27 @@ function App(){
   return (
     <AuthProvider>
       <TaskProvider>
-        <BrowserRouter>
-          <main className="container mx-auto px-10">
-            <NavBar />
-            <Routes>  
-              <Route path="/" element={<HomePage/>} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              
-              <Route element= {<ProtectedRoute />}>
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/foro" element={<MainUsersPage />} />
-                <Route path="/nuevaPub" element={<NewPubPage />} />
-                <Route path="/tasks" element={<TasksPage />} />
-                <Route path="/tasks/:id" element={<NewPubPage />} />
-              </Route>
+        <CursoProvider>
+          <BrowserRouter>
+            <main className="container mx-auto px-10">
+              <NavBar />
+              <Routes>  
+                <Route path="/" element={<HomePage/>} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                
+                <Route element= {<ProtectedRoute />}>
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/foro" element={<MainUsersPage />} />
+                  <Route path="/nuevaPub" element={<NewPubPage />} />
+                  <Route path="/tasks" element={<TasksPage />} />
+                  <Route path="/tasks/:id" element={<NewPubPage />} />
+                </Route>
 
-            </Routes>
-          </main>
-        </BrowserRouter>
+              </Routes>
+            </main>
+          </BrowserRouter>
+        </CursoProvider>
       </TaskProvider>
     </AuthProvider>
   )

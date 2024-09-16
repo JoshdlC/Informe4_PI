@@ -1,16 +1,21 @@
 import { useForm } from 'react-hook-form'
 import { useTasks } from '../context/TaskContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import { useCursos } from '../context/CursoContext';
 dayjs.extend(utc);
 
 export function NewPubPage() {
 
   const {register, handleSubmit, setValue, formState:{errors}} = useForm();
   const {createTask, getTask, updateTask} = useTasks();
-  
+  const {user} = useAuth();
+  const {getCursos, cursos} = useCursos();
+  const [ selectedOption, setSelectedOption ] = useState('curso');
+    
   const navigate = useNavigate();
   const params = useParams();
 
@@ -24,6 +29,7 @@ export function NewPubPage() {
         setValue("date", dayjs.utc(task.date).format('YYYY-MM-DD'))
       }
     }
+    getCursos();
     loadTask(); 
   }, []);
 
@@ -37,6 +43,7 @@ export function NewPubPage() {
     // if(data.date) dataValid.date = dayjs().utc(data.date).format();
     console.log(dataValid)
     if(params.id){
+      console.log(params.id)
       console.log('editando')
       updateTask(params.id, dataValid);
     } else {
@@ -45,27 +52,79 @@ export function NewPubPage() {
     navigate('/tasks')      
 
   })
+
+  const cursosUnicos = Array.from(new Set(cursos.map(curso => curso.nombre)))
+    .map(name => {
+      return cursos.find(curso => curso.nombre === name);
+  });
+
+  const catedraticosUnicos = Array.from(new Set(cursos.map(curso => curso.catedratico)))
+    .map(name => {
+      return cursos.find(curso => curso.catedratico === name);
+    });
+
+
   
   return (
     <main>  
       <div className="flex h-[calc(100vh-100px)] items-center justify-center">
         <div>
           <h1 className='flex items-center justify-center text-2xl font-bold my-6'> Nueva publicacion</h1>
+          <div className="mb-4">
+            <button
+              type="button"
+              onClick={() => setSelectedOption('curso')}
+              className={`mr-2 px-4 py-2 rounded ${selectedOption === 'curso' ? 'bg-violet-600 text-white font-bold' : 'bg-violet-400'}`}
+            >
+              Cursos
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedOption('catedratico')}
+              className={`px-4 py-2 rounded ${selectedOption === 'catedratico' ? 'bg-violet-600 text-white font-bold' : 'bg-violet-400'}`}
+            >
+              Catedráticos
+            </button>
+          </div>
           <form onSubmit={onSubmit}>
-
-            
-            <label htmlFor='curso'> Curso</label>
-            <input type="text" placeholder="Titulo" 
-              {...register("curso", {required: true})}
-
-              className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
-              autoFocus
-            />
-            {errors.curso && (
-              <p className="text-red-500 text-xs">Por favor ingrese un titulo.</p>
+            <input type="hidden" {...register("usuario")} value={user._id}/>
+            {selectedOption === 'curso' && (
+              <>
+                <label htmlFor='curso'>Curso</label>
+                <select
+                  {...register("curso", { required: true })}
+                  className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
+                >
+                  {cursosUnicos.map(curso => (
+                    <option key={curso._id} value={curso.value}>
+                      {curso.nombre}
+                    </option>
+                  ))}
+                </select>
+                {errors.curso && (
+                  <p className="text-red-500 text-xs">Por favor seleccione un curso.</p>
+                )}
+              </>
             )}
 
-
+            {selectedOption === "catedratico" && (
+              <>
+                <label htmlFor="catedratico">Catedrático</label>
+                <select
+                {...register("catedratico", {required: true})}
+                className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
+                >
+                  {catedraticosUnicos.map(curso => (
+                    <option key={curso._id} value={curso.value}>
+                      {curso.catedratico}
+                    </option>
+                  ))}
+                </select>
+                {errors.curso && (
+                  <p className="text-red-500 text-xs">Por favor seleccione un catedráctico.</p>
+                )}
+              </>
+            )}
             <label htmlFor='mensaje'> Mensaje</label>
 
             <textarea rows='5' placeholder='Descripcion'
@@ -86,7 +145,7 @@ export function NewPubPage() {
             )}
             
 
-            <button>Guardar</button>
+            <button className='bg-violet-600 hover:bg-violet-700 active:bg-violet-800 rounded-md px-4 py-2'>Guardar</button>
           </form>
 
         </div>
