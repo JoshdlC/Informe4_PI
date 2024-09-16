@@ -9,5 +9,5 @@ export const createTaskRequest = (task) => axios.post("/tasks", task);
 export const updateTaskRequest = async (task) =>
     axios.put(`/tasks/${task._id}`, task);
 
-export const deleteTaskRequest = async (id) => axios.delete(`/tasks/${id}`);
+export const deleteTaskRequest = async (_id) => axios.delete(`/tasks/${_id}`);
 

@@ -46,6 +46,7 @@ export function TaskProvider({children}){
     const getTask = async (id) => {
         try {
             const res = await getTaskRequest(id);
+            console.log(res);
  
             return res.data;
         } catch (error) {
@@ -60,6 +61,10 @@ export function TaskProvider({children}){
         } catch (error) {
             console.log(error);
         }
+        
+    }
+
+    const filtrarTasks = (curso) => {
         
     }
     return (

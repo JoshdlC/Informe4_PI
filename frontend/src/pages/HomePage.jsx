@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom"
 function HomePage() {
   return (
     <main className="h-screen flex flex-col justify-center items-center bg-cover bg-center min-h-screen" style={{backgroundImage: "url('./resources/rectoria_usac.jpg')"}}>
-      <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
+      <div className="absolute inset-0 bg-black opacity-75 z-0"></div>
       
       <div className="relative z-10 flex flex-col items-center justify-center h-full w-full">
       
@@ -15,13 +15,13 @@ function HomePage() {
           <div className='flex justify-center'>
             <p></p>
               <img 
-                  src = "./resources/fiusac.png"
+                  src = "./resources/Usac_logo.png"
                   alt = "Logo de la Facultad de Ingenieria USAC"
-                  className="w-1/3 h-1/3"
+                  className="w-20 h-20"
               >
               </img>
               <img
-                src="./resources/logo_SISTEMAS.png"
+                src="./resources/logo-ecys-fiusac-min.png"
                 alt = "Logo de la Escuela de Ciencias y Sistemas de FIUSAC"
                 className="w-1/3 h-1/3"
               >

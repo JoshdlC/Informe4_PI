@@ -1,8 +1,6 @@
 import app from './app.js';
 import {connectDB} from './db.js';
 import Curso from './models/curso.model.js';
-<<<<<<< HEAD
-
 const seedCursos = async () => {
         const defaultCursos = [
             {
@@ -1052,7 +1050,6 @@ const seedCursos = async () => {
                 codigo: "0724",
             },
         ];
->>>>>>> developFrontend_Josue
 
         for (const curso of defaultCursos) {
             // Verifica si el curso ya existe
@@ -1074,19 +1071,11 @@ const seedCursos = async () => {
         }
 };
 connectDB();
-<<<<<<< HEAD
-
-=======
->>>>>>> developFrontend_Josue
 // Llamar a la función `seedCursos` después de que la conexión esté establecida
 import mongoose from 'mongoose';
 mongoose.connection.once('open', async () => {
     console.log('Conexión con la base de datos establecida.');
     await seedCursos();  // Inicializar los cursos solo si no existen
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> developFrontend_Josue
 app.listen(3000)
 console.log('Server on port', 3000);
