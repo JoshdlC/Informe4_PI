@@ -21,7 +21,7 @@ export const register = async(req, res) => {
             registro_academico,
             nombres,
             apellidos,
-            password: passwordHash,
+            password,
             correo,
         });
     
