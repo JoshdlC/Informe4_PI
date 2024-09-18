@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.routes.js';
 import taskRoutes from './routes/tasks.routes.js';
 import cursoRoutes from './routes/cursos.routes.js';
 import catedraticoRoutes from './routes/catedraticos.routes.js';
+import comentarioRoutes from './routes/comentarios.routes.js';
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use("/api", authRoutes);
 app.use("/api", taskRoutes);
 app.use("/api", cursoRoutes);
 app.use("/api", catedraticoRoutes);
+app.use("/api", comentarioRoutes);
 
 export default app;

@@ -22,8 +22,4 @@ export const getCurso = async (req, res) => {
     const curso = await Task.findById(req.params.id);
     if(!curso) return res.status(404).json({message: 'Curso not found'});
     res.json(curso);
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> origin/main
