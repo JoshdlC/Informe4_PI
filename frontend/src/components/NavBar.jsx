@@ -4,13 +4,15 @@ import { useAuth } from '../context/AuthContext'
 function NavBar() {
 
   const {isAuthenticated, logout, user} = useAuth();
-  console.log(user)
+  // console.log(user)
 
 
   return (
     <nav className="bg-zinc-700 my-3 flex justify-between py-4 px-10 rounded-lg">
-      <Link to='/'>
-        <h1 className="text-2xl font-bold">Task manager</h1>
+      <Link to={
+        isAuthenticated ? '/foro' : '/'
+      }>
+        <h1 className="text-2xl font-bold">Página principal</h1>
       </Link>
         
         <ul className="flex gap-x-2">
@@ -30,6 +32,7 @@ function NavBar() {
                   Añade una publicacion
                 </Link>
               </li>
+              
               <li>
                 <Link to={'/'} onClick={() => logout()}
                 className='bg-red-600 px-4 py-1 rounded-sm font-bold my-2'>

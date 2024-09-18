@@ -1,5 +1,6 @@
 import {useEffect} from 'react'
 import { useTasks } from '../context/TaskContext';
+import TaskCard from '../components/TaskCard';
 
 
 //! ESTE COMPONENTE NO SE USA, SOLO ES DE PRUEBA
@@ -12,17 +13,21 @@ function TasksPage() {
     }, []);
 
     if (tasks.length === 0) {
-        return (<h1>No hay tareas</h1>)
+        return (<h1>No hay tareas...</h1>)
     };
 
   return (
-    <div>
+    <div className='grid grid-cols-3 gap-2'>
     {
         tasks.map(task => (
+<<<<<<< HEAD
+            <TaskCard task={task} key={task._id}/>
+=======
             <div key={task._id}>
                 <h2>{task.curso}</h2>
                 <p>{task.mensaje}</p>
             </div>
+>>>>>>> origin/main
         ))  
     }
     </div>

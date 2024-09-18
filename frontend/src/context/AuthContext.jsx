@@ -1,5 +1,5 @@
 import {createContext, useContext, useState, useEffect} from 'react';
-import { registerRequest, loginRequest, verifyTokenRequest } from '../api/auth';
+import { registerRequest, loginRequest, verifyTokenRequest, updateRequest } from '../api/auth';
 import { set } from 'react-hook-form';
 import Cookies from 'js-cookie';
 
@@ -31,7 +31,7 @@ export const AuthProvider = ({children}) => {
         if (errors.length > 0) {
           const timer = setTimeout(() => {
             setErrors([]);
-          }, 10000);
+          }, 7500);
           return () => clearTimeout(timer);
         }
       }, [errors]);
@@ -39,15 +39,15 @@ export const AuthProvider = ({children}) => {
       //* ver si manda la cookie
     useEffect(() => {
         const checkLogin = async () => {
-            const cookies = Cookies.get()
-            console.log(cookies);
-            if (!cookies.token){
+            const token = Cookies.get()
+            console.log(token);
+            if (!token){
                 setIsAuthenticated(false);
                 setLoading(false);
                 return             
             }
             try {
-                const res = await verifyTokenRequest(cookies.token)
+                const res = await verifyTokenRequest(token)
                 if (!res.data) {
                     setIsAuthenticated(false)
                     setLoading(false);
@@ -95,6 +95,17 @@ export const AuthProvider = ({children}) => {
     
     };
 
+    const updateUser = async (user) => {
+
+        try {
+            const post = await user.findOneAndUpdate({user});
+            
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     
 
     
@@ -104,6 +115,7 @@ export const AuthProvider = ({children}) => {
             signUp, 
             signIn, 
             logout,
+            updateUser,
             loading,
             user, 
             isAuthenticated, 
