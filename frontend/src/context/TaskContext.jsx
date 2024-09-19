@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { createTaskRequest, getTasksRequest, deleteTaskRequest, getTaskRequest, updateTaskRequest  } from "../api/task";
+import { useAuth } from "./AuthContext";
 
 const TaskContext = createContext();
 
@@ -16,6 +17,7 @@ export const useTasks = () => {
 export function TaskProvider({children}){
 
     const [tasks, setTasks] = useState([]);
+    const {user} = useAuth();
 
     const getTasks = async () => {
         try {
@@ -27,11 +29,21 @@ export function TaskProvider({children}){
         
     }
 
-    const createTask = async (task) => {
+    const createTask = async (taskData) => {
         
-        console.log('agregando publicacion') 
+        console.log('agregando publicacion');
+        const task = {
+            ...taskData,
+            usuario: user._id
+        };
+
         const res = await createTaskRequest(task);
-        console.log(res) 
+        console.log('Publicacion creada');
+        console.log(res);
+
+        if (res.status === 201) {
+            setTasks(prevTasks => [...prevTasks, res.data]);
+        }
     };
 
     const deleteTask = async (id) => {
