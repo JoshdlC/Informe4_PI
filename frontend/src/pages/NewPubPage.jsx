@@ -116,8 +116,8 @@ export function NewPubPage() {
                 >
                   {catedraticosUnicos.map(curso => (
                     <option key={curso._id} value={curso.value}>
-                    </option>
                       {curso.catedratico}
+                    </option>
                   ))}
                 </select>
                 {errors.curso && (
