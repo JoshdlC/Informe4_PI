@@ -746,7 +746,7 @@ const seedCatedraticos = async () => {
         // Verifica si el curso ya existe
         const catedraticoExistente = await Catedratico.findOne({
             nombre: catedratico.nombre,
-            apellido: catedratico.seccion
+            apellido: catedratico.apellido
         });
         
         if(!catedraticoExistente){

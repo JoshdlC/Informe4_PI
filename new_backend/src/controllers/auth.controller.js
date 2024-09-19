@@ -48,8 +48,12 @@ export const login = async(req, res) => {
         const userFound = await User.findOne({registro_academico})
         if (!userFound) return res.status(400).json({message: "Registro academico no registrado"});
 
-        const  isMatch = await bcrypt.compare(password, userFound.password)
-        if(!isMatch) return res.status(400).json({message: "Incorrect password"});
+        if (password !== userFound.password) {
+            return res.status(400).json({ message: "Contraseña incorrecta" });
+        }
+
+        // const  isMatch = await bcrypt.compare(password, userFound.password)
+        // if(!isMatch) return res.status(400).json({message: "Incorrect password"});
     
         const token = await createAccessToken({id: userFound._id});
         
