@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useCursos } from '../context/CursoContext';
+import { useCatedraticos } from '../context/CatedraticoContext';
 dayjs.extend(utc);
 
 export function NewPubPage() {
@@ -14,8 +15,9 @@ export function NewPubPage() {
   const {createTask, getTask, updateTask} = useTasks();
   const {user} = useAuth();
   const {getCursos, cursos} = useCursos();
+  const { getCatedraticos, catedraticos} = useCatedraticos();
   const [ selectedOption, setSelectedOption ] = useState('curso');
-    
+  // console.log(user)
   const navigate = useNavigate();
   const params = useParams();
 
@@ -29,39 +31,41 @@ export function NewPubPage() {
         setValue("date", dayjs.utc(task.date).format('YYYY-MM-DD'))
       }
     }
+    getCatedraticos();
     getCursos();
     loadTask(); 
   }, []);
 
   const onSubmit = handleSubmit((data) => {
-
     const dataValid = {
-      ... data,      
-      date: data.date ? dayjs.utc(data.date).format() : dayjs.utc().format(),
+        usuario: user._id,
+        
+        mensaje: data.mensaje,
+        date: data.date ? dayjs.utc(data.date).format() : dayjs.utc().format(),
+        curso: selectedOption === 'curso' ? data.curso : data.catedratico // No necesitas concatenar aquí
     };
-
-    // if(data.date) dataValid.date = dayjs().utc(data.date).format();
-    console.log(dataValid)
-    if(params.id){
-      console.log(params.id)
-      console.log('editando')
-      updateTask(params.id, dataValid);
+    console.log("usuario " + user);
+    console.log(dataValid);
+    console.log("Usuario id:")
+    
+    if (params.id) {
+        updateTask(params.id, dataValid);
     } else {
-      createTask(dataValid);
+        createTask(dataValid);
     }
-    navigate('/tasks')      
-
-  })
+    
+    navigate('/tasks');
+  });
 
   const cursosUnicos = Array.from(new Set(cursos.map(curso => curso.nombre)))
     .map(name => {
       return cursos.find(curso => curso.nombre === name);
   });
 
-  const catedraticosUnicos = Array.from(new Set(cursos.map(curso => curso.catedratico)))
+  const catedraticosUnicos = Array.from(new Set(catedraticos.map(catedratico => catedratico.nombre)))
     .map(name => {
-      return cursos.find(curso => curso.catedratico === name);
-    });
+      return catedraticos.find(catedratico => catedratico.nombre === name);
+  });
 
 
   
@@ -111,16 +115,16 @@ export function NewPubPage() {
               <>
                 <label htmlFor="catedratico">Catedrático</label>
                 <select
-                {...register("catedratico", {required: true})}
-                className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
+                    {...register("catedratico", {required: true})}
+                    className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
                 >
-                  {catedraticosUnicos.map(curso => (
-                    <option key={curso._id} value={curso.value}>
-                      {curso.catedratico}
-                    </option>
-                  ))}
+                    {catedraticosUnicos.map(catedratico => (
+                        <option key={catedratico._id} value={`${catedratico.nombre} ${catedratico.apellido}`}>
+                            {catedratico.nombre} {catedratico.apellido}
+                        </option>
+                    ))}
                 </select>
-                {errors.curso && (
+                {errors.catedratico && (
                   <p className="text-red-500 text-xs">Por favor seleccione un catedráctico.</p>
                 )}
               </>

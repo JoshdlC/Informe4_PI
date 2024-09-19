@@ -1,14 +1,17 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import ShowPasswordIcon from "/resources/eye-password-show.svg";
+import HidePasswordIcon from "/resources/eye-password-hide.svg";
 
 function LoginPage() {
     
     const { register, handleSubmit, formState: {errors}} = useForm()
 
     const { signIn, errors:signInErrors, isAuthenticated } = useAuth();
-
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const onSubmit = handleSubmit((data) => {
@@ -23,6 +26,9 @@ function LoginPage() {
         };
       }, [isAuthenticated]);
 
+      const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+      }
       //<main className="relative bg-cover bg-center min-h-screen" style={{ backgroundImage: `url('/path/to/your/image.jpg')` }}></main>
 
     return (
@@ -40,7 +46,9 @@ function LoginPage() {
                     </Link> */}
                 </header>  
                 <div className="flex h-[calc(100vh-100px)] items-center justify-center z-10">
-                    <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md"> 
+                    
+                    <div className="bg-zinc-800 max-w-xl w-full p-10 rounded-xl relative"> 
+                        {/* <h1>xd</h1> */}
         
                         {
                             signInErrors.map((error, index) => (
@@ -59,16 +67,30 @@ function LoginPage() {
                             />
                             {
                                 errors.registro && (
-                                <p className="text-red-500">Registro academico es requerido</p>
+                                <p className="text-red-500">Usuario y/o constraseña incorrectos</p>
                             )}
 
-                            <input type="password" {... register("password", {required: true})} 
-                            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2 "
-                            placeholder="Password"
-                            />
+                            <div className="relative">
+                                <input type={showPassword ? "text":"password"} {... register("password", {required: true})} 
+                                className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2 "
+                                placeholder="Password"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={togglePasswordVisibility}
+                                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                                >
+                                    <img
+                                        src={showPassword ? HidePasswordIcon : ShowPasswordIcon}
+                                        alt={showPassword ? "Hide password" : "Show password"}
+                                        className="h-5 w-5"
+                                    />
+                                </button>
+                            </div>
+                            
                             {
                                 errors.password && (
-                                <p className="text-red-500">La password es requerida</p>
+                                <p className="text-red-500">Usuario y/o constraseña incorrectos</p>
                             )}
 
                             
