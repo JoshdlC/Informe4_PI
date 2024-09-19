@@ -1,6 +1,8 @@
 import app from './app.js';
 import {connectDB} from './db.js';
 import Curso from './models/curso.model.js';
+import Catedratico from './models/catedratico.model.js';
+
 const seedCursos = async () => {
         const defaultCursos = [
             {
@@ -535,12 +537,240 @@ const seedCursos = async () => {
             }
         }
 };
+
+const seedCatedraticos = async () => {
+    const defaultCatedraticos = [
+        {
+            nombre: "WIILLIAM SAMUEL",
+            apellido: "GUEVARA ORELLANA",
+        },
+        {
+            nombre: "EDGAR FRANCISCO",
+            apellido: "RODAS ROBLEDO",
+        },
+        {
+            nombre: "CLAUDIA LICETH",
+            apellido: "ROJAS MORALES",
+        },
+        {
+            nombre: "MIRNA IVONNE",
+            apellido: "ALDANA LARRAZABAL",
+        },
+        {
+            nombre: "OTTO RENE",
+            apellido: "ESCOBAR LEIVA",
+        },
+        {
+            nombre: "GABRIEL ALEJANDRO",
+            apellido: "DÍAZ LÓPEZ",
+        },
+        {
+            nombre: "JURGEN ANDONI",
+            apellido: "RAMIREZ RAMIREZ",
+        },
+        {
+            nombre: "LUIS FERNANDO",
+            apellido: "ESPINO BARRIOS",
+        },
+        {
+            nombre: "ALVARO GIOVANNI",
+            apellido: "LONGO MORALES",
+        },
+        {
+            nombre: "OTTO AMILCAR",
+            apellido: "RODRIGUEZ ACOSTA",
+        },
+        {
+            nombre: "LUIS ALBERTO",
+            apellido: "ARIAS",
+        },
+        {
+            nombre: "ILEANA GUISELA",
+            apellido: "RALDA RECINOS",
+        },
+        {
+            nombre: "EVELYN CAROLINA",
+            apellido: "MORALES RUIZ",
+        },
+        {
+            nombre: "EDGAR RENE",
+            apellido: "ORNELIS HOIL",
+        },
+        {
+            nombre: "ALVARO OBRAYAN",
+            apellido: "HERNANDEZ GARCIA",
+        },
+        {
+            nombre: "MARIO JOSE",
+            apellido: "BAUTISTA FUENTES",
+        },
+        {
+            nombre: "WILLIAM ESTUARDO",
+            apellido: "ESCOBAR ARGUETA",
+        },
+        {
+            nombre: "MOISES EDUARDO",
+            apellido: "VELASQUEZ OLIVA",
+        },
+        {
+            nombre: "HERMAN IGOR",
+            apellido: "VELIZ LINARES",
+        },
+        {
+            nombre: "NEFTALI DE JESUS",
+            apellido: "CALDERON MENDEZ",
+        },
+        {
+            nombre: "MARLON ANTONIO",
+            apellido: "PÉREZ TÜRK",
+        },
+        {
+            nombre: "JOSE MANUEL",
+            apellido: "RUIZ JUAREZ",
+        },
+        {
+            nombre: "STANLY",
+            apellido: "BARRIOS",
+        },
+        {
+            nombre: "EDWIN ESTUARDO",
+            apellido: "ZAPETA GÓMEZ",
+        },
+        {
+            nombre: "FERNANDO JOSÉ",
+            apellido: "GONZÁLEZ PAZ",
+        },
+        {
+            nombre: "DAMARIS",
+            apellido: "CAMPOS DE LÓPEZ",
+        },
+        {
+            nombre: "DAVID ESTUARDO",
+            apellido: "Morales",
+        },
+        {
+            nombre: "ZULMA KARINA",
+            apellido: "AGUIRRE ORDONEZ",
+        },
+        {
+            nombre: "VIRGINIA VICTORIA",
+            apellido: "TALA AYERDI",
+        },
+        {
+            nombre: "FLORIZA FELIPA",
+            apellido: "AVILA PESQUERA DE MEDINILLA",
+        },
+        {
+            nombre: "JUAN ALVARO",
+            apellido: "DIAZ ARDAVIN",
+        },
+        {
+            nombre: "OSCAR ALEJANDRO",
+            apellido: "PAZ CAMPOS",
+        },
+        {
+            nombre: "CESAR AUGUSTO",
+            apellido: "FERNANDEZ CACERES",
+        },
+        {
+            nombre: "MIGUEL ANGEL",
+            apellido: "CANCINOS RENDON",
+        },
+        {
+            nombre: "BAYRON WOSVELY",
+            apellido: "LOPEZ LOPEZ",
+        },
+        {
+            nombre: "EDGAR RUBEN",
+            apellido: "SABAN RAXON",
+        },
+        {
+            nombre: "MANUEK HAROLDO",
+            apellido: "CASTILLO REYNA",
+        },
+        {
+            nombre: "KEVIN ADIEL",
+            apellido: "LAJPOP AJPACAJA",
+        },
+        {
+            nombre: "MARIO JOSE",
+            apellido: "BAUTISTA FUENTES",
+        },
+        {
+            nombre: "GUIPPSY JEANNIRA",
+            apellido: "MENENDEZ PEREZ",
+        },
+        {
+            nombre: "JOSE ANIBAL",
+            apellido: "SILVA DE LOS ANGELES",
+        },
+        {
+            nombre: "PEDRO PABLO",
+            apellido: "HERNANDEZ RAMIREZ",
+        },
+        {
+            nombre: "ALLAN ALBERTO",
+            apellido: "MORATAYA",
+        },
+        {
+            nombre: "LUDWING FEDERICO",
+            apellido: "ALTAN SAC",
+        },
+        {
+            nombre: "LUIS ALBERTO",
+            apellido: "VETTORAZZI ESPANA",
+        },
+        {
+            nombre: "JESUS ALBERTO",
+            apellido: "GUZMAN POLANCO",
+        },
+        {
+            nombre: "EDWIN ESTUARDO",
+            apellido: "ZAPETA GOMEZ",
+        },
+        {
+            nombre: "EVEREST DARWIN",
+            apellido: "MEDINILLA RODRIGUEZ",
+        },
+        {
+            nombre: "MARCO TULIO",
+            apellido: "ALDANA PRILLWITZ",
+        },
+        {
+            nombre: "JORGE LUIS",
+            apellido: "ALVAREZ MEJIA",
+        },
+    ];
+
+    for (const catedratico of defaultCatedraticos) {
+        // Verifica si el curso ya existe
+        const catedraticoExistente = await Catedratico.findOne({
+            nombre: catedratico.nombre,
+            apellido: catedratico.apellido
+        });
+        
+        if(!catedraticoExistente){
+            try {
+                await Catedratico.insertMany(defaultCatedraticos);  // Inserta los cursos
+                console.log('Catedraticos añadidos correctamente.');
+            } catch (error) {
+                console.error('Error al insertar catedraticos:', error);
+            }
+        }else{
+            console.log(`Nombre "${catedratico.nombre}" Apellido "${catedratico.apellido}" ya existe.`);
+        }
+    }
+};
+
 connectDB();
+
 // Llamar a la función `seedCursos` después de que la conexión esté establecida
 import mongoose from 'mongoose';
 mongoose.connection.once('open', async () => {
     console.log('Conexión con la base de datos establecida.');
     await seedCursos();  // Inicializar los cursos solo si no existen
+    await seedCatedraticos();  // Inicializar los catedraticos solo si no existen
 });
+
 app.listen(3000)
 console.log('Server on port', 3000);

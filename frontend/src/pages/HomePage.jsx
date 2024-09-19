@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom"
 function HomePage() {
   return (
     <main className="h-screen flex flex-col justify-center items-center bg-cover bg-center min-h-screen" style={{backgroundImage: "url('./resources/rectoria_usac.jpg')"}}>
-      <div className="absolute inset-0 bg-black opacity-75 z-0"></div>
+      <div className="absolute inset-0 bg-black opacity-80 z-0"></div>
       
       <div className="relative z-10 flex flex-col items-center justify-center h-full w-full">
       

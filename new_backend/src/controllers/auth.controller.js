@@ -21,7 +21,7 @@ export const register = async(req, res) => {
             registro_academico,
             nombres,
             apellidos,
-            password: passwordHash,
+            password,
             correo,
         });
     
@@ -48,8 +48,12 @@ export const login = async(req, res) => {
         const userFound = await User.findOne({registro_academico})
         if (!userFound) return res.status(400).json({message: "Registro academico no registrado"});
 
-        const  isMatch = await bcrypt.compare(password, userFound.password)
-        if(!isMatch) return res.status(400).json({message: "Incorrect password"});
+        if (password !== userFound.password) {
+            return res.status(400).json({ message: "Contraseña incorrecta" });
+        }
+
+        // const  isMatch = await bcrypt.compare(password, userFound.password)
+        // if(!isMatch) return res.status(400).json({message: "Incorrect password"});
     
         const token = await createAccessToken({id: userFound._id});
         
@@ -106,4 +110,41 @@ export const verifyToken = async (req, res) => {
         });
     });
 
+};
+
+export const updateProfile = async (req, res) => {
+    const { nombres, apellidos, correo, password } = req.body; //* Obtiene los datos del cuerpo de la solicitud
+
+    try {
+        //* Buscar el usuario por ID
+        const userFound = await User.findById(req.user.id);
+        if (!userFound) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+        //* Si se proporciona una nueva contraseña, hashéala
+        if (password) {
+            const passwordHash = await bcrypt.hash(password, 10);
+            userFound.password = passwordHash; //* Actualiza la contraseña en el objeto del usuario
+        }
+
+        //* Actualiza los demás campos
+        userFound.nombres = nombres || userFound.nombres; //* Mantiene el valor actual si no se proporciona un nuevo valor
+        userFound.apellidos = apellidos || userFound.apellidos;
+        userFound.correo = correo || userFound.correo;
+
+        //* Guarda el usuario actualizado
+        const updatedUser = await userFound.save(); //* Guardar el documento actualizado
+
+        return res.json({
+            id: updatedUser._id,
+            registro_academico: updatedUser.registro_academico,
+            nombres: updatedUser.nombres,
+            apellidos: updatedUser.apellidos,
+            correo: updatedUser.correo,
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: error.message });
+    }
 };

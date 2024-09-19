@@ -95,14 +95,21 @@ export const AuthProvider = ({children}) => {
     
     };
 
-    const updateUser = async (user) => {
+    const updateUser = async (userData) => {
 
         try {
-            const post = await user.findOneAndUpdate({user});
+            const res = await updateRequest(userData);
+            setUser(res.data);
+
             
             
         } catch (error) {
             console.log(error)
+            if (error.response && error.response.data) {
+                setErrors([error.response.data.message]);
+            } else {
+                setErrors(['Error desconocido']);
+            }
         }
     }
 
